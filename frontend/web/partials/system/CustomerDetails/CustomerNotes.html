@@ -1,0 +1,58 @@
+<div class="row form-inline">
+    <div class="col-sm-6">
+        <input type="text" class="form-control" placeholder="Search" ng-model="searchbox">
+    </div>
+    <div class="col-sm-6" style="text-align:right;">
+        <label style="font-weight: normal; display: inline-block;">
+            Show 
+            <select class="form-control input-sm" id="itemsPerPage" ng-model="itemsPerPage" ng-change="resetPage()">
+                <option value="10">10</option>
+                <option value="100">100</option>
+                <option value="1000">1000</option>
+            </select>
+            per page
+        </label>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12 table-resposive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th class="Font_th">Date</th>      
+                    <th class="Font_th">Note</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="n in Notes">
+                    <td style="width: 118px;">{{n.date | date: 'MM-dd-yyyy' }}</td>
+                    <td>{{n.note}}</td>
+
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row" >
+    <div class="col-sm-6">
+
+    </div>
+    <div class="col-sm-6">
+        <ul 
+            uib-pagination total-items="getData().length" 
+            items-per-page="itemsPerPage" 
+            ng-model="currentPage" 
+            max-size="5" 
+            class="pagination pagination-sm float-right" 
+            boundary-link-numbers="true" rotate="false">
+        </ul>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12 text-center">
+        <a href="#/Customer/{{id_client}}" class="btn btn-primary" style="background-color: #1C335C!important;">Go Back</a>
+    </div>
+</div>

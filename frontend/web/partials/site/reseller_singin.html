@@ -1,0 +1,49 @@
+<!--<div class="row">-->
+    <div class="col-md-12 bg-bar" >
+        <div class="row" style="height: 500px; padding: 0 !important;">
+            <div class="col-md-6" style="text-align: center; padding-top: 7%;" >
+                <div style="margin-top: 0px; margin-bottom: 0px;">
+                    <form role="form" class="form-login" method="post" name="myform" id="myform" ng-submit="login()">
+                        <input type="hidden" value="1" name="inicia">
+                        <div class="row text-center">
+                            <!--<div class="col-md-8 mx-auto my-0 form-group" ng-class="{ 'has-success': !error['agency'] && submitted, 'has-error': error['agency'] && submitted }">
+                                <h5 class="titulo">Enter Agency Code</h5>
+                                <input type="text" class="form-control" name="agency" id="agency" placeholder="Agency Code #" ng-model="userModel.agency" required="required" pattern="^ADC\d{3,5}$" oninvalid="setCustomValidity('ADC105 Example')" oninput="setCustomValidity('')">
+                                <p class="help-block help-block-error m-0">{{ error['agency']}}</p>
+                            </div>-->
+                            <div class="col-md-8 mx-auto my-0 form-group" ng-class="{ 'has-success': !error['username'] && submitted, 'has-error': error['username'] && submitted }">
+                                <h5 class="titulo">Enter Username</h5>
+                                <input type="text" class="form-control" name="user" placeholder="User" ng-model="userModel.username" required="required">
+                                <p class="help-block help-block-error m-0">{{ error['username']}}</p>
+                            </div>
+                            <div class="col-md-8 mx-auto my-0 form-group" ng-class="{ 'has-success': !error['password'] && submitted, 'has-error': error['password'] && submitted }">
+                                <h5 class="titulo">Enter Password</h5>
+                                <input type="password" class="form-control" name="pass" placeholder="Password" ng-model="userModel.password" required="required">
+                                <p class="help-block help-block-error m-0">{{ error['password']}}</p>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="1" name="recordar" id="recordar" ng-model="userModel.rememberMe">
+                                    <label class="form-check-label" for="recordar">
+                                        Remember me
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <a class="btn btn-dark" href="#/reseller">GO BACK</a>
+                                <button type="submit" class="btn btn-success">SING IN</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-6" style="  
+                 background-image: url(images/guy.png);
+                 background-position: right bottom;
+                 background-size: 64%;
+                 background-repeat: no-repeat;
+                 " >
+            </div>
+        </div>
+    </div>
+<!--</div>-->

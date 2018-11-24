@@ -1,0 +1,326 @@
+<div class="col-sm-12">
+    <div class="row">
+        <div class="col-sm-12" style="color: #FFF; text-align: center; background-color: #1c335c; padding: 10px;">
+            <h5 style="margin-bottom: 0;" ng-if="!edit">New Customer</h5>
+            <h5 style="margin-bottom: 0;" ng-if="edit">Edit Customer</h5>
+        </div>
+    </div>
+
+    <form name="frmClient" ng-submit="saveClient()">
+        <fieldset>
+            <div class="row">
+                <div class="col-sm-12 form-section">General Information</div>
+            </div>
+            <div class="form-row">
+                <div class="col-sm-12 form-group-separator">Name</div>
+                <div class="form-group col-md-6 px-5 mx-auto">
+                    <label for="name">First</label>
+                    <input type="text" class="form-control" id="name" placeholder="FIRST NAME" ng-model="client.name">
+                </div>
+                <div class="form-group col-md-6 px-5 mx-auto">
+                    <label for="apellido">Last</label>
+                    <input type="text" class="form-control" id="apellido" placeholder="LAST NAME" ng-model="client.apellido">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-sm-12 form-group-separator">D.O.B</div>
+                <div class="form-group col-md-6 px-5 mx-auto">
+                    <label for="date_birth">Date</label>
+                    <input type="date" class="form-control" id="date_birth" ng-model="client.date_birth" data-date-format="YYYY-MM-DD" required="required">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-sm-12 form-group-separator">Contact</div>
+
+                <div class="form-group col-md-6 px-5 mx-auto">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" placeholder="EXAMPLE@MAIL.COM" ng-model="client.email">
+                </div>
+                <div class="form-group col-md-6 px-5 mx-auto">
+                    <label for="phone">Phone</label>
+                    <input type="phone" class="form-control" id="phone"  ng-model="client.phone" ui-mask="(999) 999-9999" required="required">
+                </div>
+
+                <div class="form-group col-md-6 px-5 mx-auto">
+                    <label for="address">Address</label>
+                    <input type="text" class="form-control" id="address" placeholder="ADDRESS" ng-model="client.address">
+                </div>
+                <div class="form-group col-md-6 px-5 mx-auto">
+                    <label for="phone2">Phone #2</label>
+                    <input type="phone" class="form-control" id="phone2" ng-model="client.phone2" ui-mask="(999) 999-9999" ui-mask-placeholder="">
+                </div>
+
+                <div class="form-group col-md-4 px-5 mx-auto">
+                    <label for="city">City</label>
+                    <input type="text" class="form-control" id="city" placeholder="CITY" ng-model="client.city">
+                </div>
+                <div class="form-group col-md-4 px-5 mx-auto">
+                    <label for="state">State</label>
+                    <select class="form-control" id="state" ng-model="client.state" required>
+                        <option value="" ng-selected="{{!client.state}}">Select...</option>
+                        <option ng-repeat="s in stateDictionary" value="{{s.value}}" ng-selected="{{client.state == s.value}}">{{ s.text}}</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-4 px-5 mx-auto">
+                    <label for="zip">ZIP</label>
+                    <input type="text" class="form-control" id="zip" placeholder="23456" ng-model="client.zip" pattern="[0-9]{5}" title="Five digit zip code">
+                </div>
+
+                <div class="form-group col-md-6 col-lg-3 px-5 mx-auto">
+                    <label for="idioma">Select language</label>
+                    <select class="form-control" id="idioma" ng-model="client.idioma" required>
+                        <option value="" ng-selected="{{!client.idioma|| client.idioma == -1}}">Select...</option>
+                        <option ng-repeat="l in languageDictionary" value="{{l.value}}" ng-selected="{{client.idioma == l.value}}">{{ l.text}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-sm-12 form-group-separator">Insurance Company</div>
+                <div class="form-group col-md-6 px-5">
+                    <label for="compania">Company Name</label>
+                    <input type="text" class="form-control" id="compania" placeholder="COMPANY NAME" ng-model="client.compania" required="required" name="compania">
+                </div>
+            </div>
+            <div class="form-row" ng-if="!edit">
+                <div class="col-sm-12 form-group-separator">Date</div>
+                <div class="form-group col-md-6 px-5 mx-auto">
+                    <label for="effective">Efective</label>
+                    <input type="date" class="form-control" id="effective" ng-model="client.effective" ng-change="calcExpDate();" required="required">
+                </div>
+                <div class="form-group col-md-6 px-5 mx-auto">
+                    <label for="fechaMed">Expiration</label>
+                    <input type="date" class="form-control" id="fechaMed" ng-model="client.fechaMed" readonly="readonly">
+                </div>
+            </div>
+
+            <div ng-if="!edit">
+                <div class="row">
+                    <div class="col-sm-12 form-section">Services And Packages</div>
+                </div>
+                
+                <div class="row" style="margin-bottom:  10px;" ng-show="serviceSel">
+
+                    
+                    <div class="col-md-4 card text-center mx-auto " ng-repeat="s in services"  ng-model="client.service">
+                        <div class="card-header" style="background-color: #3f5c80; color:white;" id="service-radio-{{s.id}}">
+                            <span>{{s.desc}}</span>
+                        </div>
+                        <div class="card-body">
+       
+                                <div  class="btn btn-primary" ng-click="selectService(s);">Select</div>
+                        </div>
+                        <div class="card-footer text-muted">
+                            *Membership subject to approval.
+                        </div>
+                    </div>
+             
+
+                  <!-- <div class="custom-control custom-radio custom-control-inline" ng-repeat="s in services">
+                      <input type="radio" class="custom-control-input" id="service-radio-{{s.id}}" ng-value="s.id" ng-model="client.service" ng-required="!client.service" ng-change="selectService(s);">
+                      <label class="custom-control-label" for="service-radio-{{s.id}}"><span class="badge badge-default p-2" style="background-color: {{s.color}}!important">{{s.desc}}</span></label>
+                    </div>-->
+
+
+                </div>
+                         <div class="row" style="margin-bottom:  10px;" ng-show="plansel">  
+                                <div class="col-md-4 card text-center mx-auto " ng-repeat="p in planPeriods | filter:{ serviceId: selectedService.id }"  >
+                                    <div class="card-header" style="background-color: #3f5c80; color:white;" id="service-radio-{{s.id}}">
+                                  <label class="" ><span class="">${{p.precioBase}}{{p.desc}}</span></label>
+                                     </div>
+                                 <div class="card-body">
+       
+                                     <div  class="btn btn-primary"  ng-click="selectPlan(p)">Select</div>
+                                 </div>
+                                  <div class="card-footer text-muted">
+                                  *Membership subject to approval.
+                                  </div>
+                                </div>
+                             
+                             
+                             <!--<div class="form-group col-md-6 px-5 mx-auto text-center text-md-left">
+                                <div class="custom-control custom-radio custom-control-inline" ng-repeat="p in planPeriods | filter:{ serviceId: selectedService.id }" ng-if="selectedService.id">
+                                  <input type="radio" class="custom-control-input" id="plan-radio-{{p.value}}" ng-value="p.value" ng-model="client.plan" ng-required="!client.plan" ng-change="selectPlan(p);">
+                                  <label class="custom-control-label" ><span class="badge badge-default p-2" >${{p.precioBase}}{{p.desc}}</span></label>
+                                </div>
+                             </div-->
+                         </div>
+ <div class="row" style="margin-bottom:  10px;" ng-show="resumeplans">  
+     
+           
+              <p class="mx-auto" style="font-size: 2rem; font-weight: bold;  color: #3f5c80;">You Order: {{selectedService.desc}}{{selectedPlan.desc}}</p>
+ </div>
+                <div class="row">
+                    <div class="col-sm-12 form-section">Vehicle Information</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th class="Font_th">VIN</th>
+                                    <th class="Font_th">Model</th>
+                                    <th class="Font_th">Year</th>
+                                    <th class="Font_th">Make</th>
+                                    <th class="Font_th">Glass</th>
+                                    <th class="Font_th" style="width: 36px;"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr ng-repeat="v in vehicles">
+                                    <td>{{v.vin}}</td>
+                                    <td>{{v.model}}</td>
+                                    <td>{{v.year}}</td>
+                                    <td>{{v.make}}</td>
+                                    <td>{{v.glass}}</td>
+                                    <td>
+                                        <a href="" ng-click="vehicles.splice($index, 1)"><i class="fas fa-trash"></i></a>
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-12 px-5 text-center">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addNewCarModal" style="background-color: #1C335C!important;" ng-disabled="vehicles.length >= 5 || !selectedService.id">+ Add another vehicle</button>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12 form-section">Payment Method</div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-3 px-3 mx-auto" >
+                        <label for="pay">Method</label>
+                        <br>
+                        <p>Only Credit Card Accepted</p>
+                    </div>
+                 
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6 px-5 mx-auto text-center">
+                        <label for="paid">Please EnterAmount</label>
+                        <input type="text" class="form-control total-amount-input" id="paid" ng-model="client.paid" ng-init="client.paid = 0" ui-number-mask required="required">
+                    </div>
+                    <div class="form-group col-md-6 px-5 mx-auto text-center">
+                        <label for="calculo">Amount Required</label>
+                        <input type="text" class="form-control total-amount-input" id="calculo" ng-value="calculoRequired()" disabled="disabled">
+                    </div>
+                </div>
+                <br>
+
+                <div id="recurrent-pay-secction" ng-if="client.pay">
+                    <div class="form-row">
+                        <div class="form-group col-md-6 mx-auto text-center">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="recurrentPayment" ng-model="cardInfo.recurrentPayment" ng-change="initPaymentDay()">
+                                <label class="custom-control-label" for="recurrentPayment">Set recurrent payment</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row" ng-if="cardInfo.recurrentPayment">
+                        <div class="form-group col-md-3 mx-auto text-center">
+                            <label for="paymentDay">Next Payment Day</label>
+                            <div class="input-group">
+                                <input type="date" class="form-control" id="paymentDay" ng-model="cardInfo.paymentDay" ng-init="client.effective" required="required">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="card-info-section" ng-if="client.pay == 2 || cardInfo.recurrentPayment">
+                    <div class="panel-heading display-table text-center">
+                        <img class="img-responsive center-block" src="images/accepted_c22e0.png">
+                    </div>
+                    <div class="form-row" >
+                        <div class="form-group col-md-6 mx-auto text-center">
+                            <label for="billingName">CARDHOLDER NAME</label>
+                            <input type="text" class="form-control" id="billingName" placeholder="FIRST NAME" ng-model="cardInfo.billingName" required="required">
+                            <input type="text" class="form-control" id="billingLastName" placeholder="LAST NAME" ng-model="cardInfo.billingLastName" required="required">
+                        </div>
+                    </div>
+                    <div class="form-row" >
+                        <div class="form-group col-md-6 mx-auto text-center">
+                            <label for="cardNumber">CARD NUMBER</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="cardNumber" placeholder="VALID CARD NUMBER" ng-model="cardInfo.cardNumber" required="required">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6 mx-auto text-center">
+                            <label for="mm">EXPIRATION DATE </label>
+                            <input type="text" class="form-control" id="mm" placeholder="MM" ng-model="cardInfo.mm" required="required" style="max-width: 60px; display: inline-block;">
+                            <span> / </span>
+                            <input type="text" class="form-control" id="yy" placeholder="YY" ng-model="cardInfo.yy" required="required" style="max-width: 60px; display: inline-block;">
+                        </div>
+                    </div>
+                    <div class="form-row" >
+                        <div class="form-group col-md-6 mx-auto text-center">
+                            <label for="cardcode">Security Code</label>
+                            <input type="text" class="form-control" id="cardcode" placeholder="CVV" ng-model="cardInfo.cvv" required="required" style="max-width: 60px; display: inline-block;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        <div class="text-center">
+            <button type="submit" class="btn btn-danger my-3">submit</button>
+            <a class="btn btn-default my-3" href="#/Customer/{{ client.id}}" ng-if="edit">Cancel</a>
+        </div>
+    </form>
+
+    <div class="modal fade" id="addNewCarModal" tabindex="-1" role="dialog" aria-labelledby="addNewCarModallLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addNewCarModalLabel">Add another vehicle</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form name="addNewCarForm" ng-submit="addVehicle()">
+                    <div class="modal-body">
+                        <fieldset>
+                            <div class="form-row">
+                                <!--<div class="col-sm-12 form-group-separator">Vehicle</div>-->
+                                <div class="form-group col-md-5 px-5 mx-auto">
+                                    <label for="vin">VIN</label>
+                                    <input type="text" class="form-control" id="vin" ng-model="vehicle.vin" required="required">
+                                </div>
+                                <div class="form-group col-md-5 px-5 mx-auto">
+                                    <label for="model">Model</label>
+                                    <input type="text" class="form-control" id="model" ng-model="vehicle.model" required="required">
+                                </div>
+
+                                <div class="form-group col-md-4 px-5 mx-auto">
+                                    <label for="year">Year</label>
+                                    <input type="text" class="form-control" id="year" ng-model="vehicle.year" required="required">
+                                </div>
+                                <div class="form-group col-md-4 px-5 mx-auto">
+                                    <label for="make">Make</label>
+                                    <input type="text" class="form-control" id="make" ng-model="vehicle.make" required="required">
+                                </div>
+                                <div class="form-group col-md-4 px-5 mx-auto" ng-if="selectedService.id == 1">
+                                    <label for="glass">Add Glass : + $10.00</label>
+                                    <select class="form-control" id="glass" ng-model="vehicle.glass" required>
+                                        <option value="" ng-selected="{{!vehicle.glass}}">Select...</option>
+                                        <option value="Yes" ng-selected="{{vehicle.glass == 'Yes'}}">Yes</option>
+                                        <option value="No" ng-selected="{{vehicle.glass == 'No'}}">No</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Add</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>

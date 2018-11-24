@@ -1,0 +1,81 @@
+<div class="row form-inline">
+    <div class="col-sm-6">
+        <input type="text" class="form-control" placeholder="Search" ng-model="searchbox">
+    </div>
+    <div class="col-sm-6" style="text-align:right;">
+        <label style="font-weight: normal; display: inline-block;">
+            Show 
+            <select class="form-control input-sm" id="itemsPerPage" ng-model="itemsPerPage" ng-change="resetPage()">
+                <option value="10">10</option>
+                <option value="100">100</option>
+                <option value="1000">1000</option>
+            </select>
+             per page
+        </label>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12 table-resposive">
+        <table class="table table-striped" id="claims-table">
+            <thead>
+                <tr>
+                    <th class="Font_th">
+                        <a class="col-sort" ng-click="sort_by('id')">
+                          Claim # <span ng-show="sortingOrder == 'id'" ng-class="!reverse? 'fa fa-caret-down':'fa fa-caret-up'"></span>
+                        </a>
+                    </th>
+                    <th class="Font_th">
+                        <a class="col-sort" ng-click="sort_by('fecha')">
+                          Date <span ng-show="sortingOrder == 'fecha'" ng-class="!reverse? 'fa fa-caret-down':'fa fa-caret-up'"></span>
+                        </a>
+                    </th>
+                    <th class="Font_th">
+                        <a class="col-sort" ng-click="sort_by('vin')">
+                          Vin <span ng-show="sortingOrder == 'vin'" ng-class="!reverse? 'fa fa-caret-down':'fa fa-caret-up'"></span>
+                        </a>
+                    </th>
+                    <th class="Font_th">
+                        <a class="col-sort" ng-click="sort_by('provider')">
+                          Provider <span ng-show="sortingOrder == 'provider'" ng-class="!reverse? 'fa fa-caret-down':'fa fa-caret-up'"></span>
+                        </a>
+                    </th>
+                    <th class="Font_th">
+                        <a class="col-sort" ng-click="sort_by('total')">
+                          total <span ng-show="sortingOrder == 'total'" ng-class="!reverse? 'fa fa-caret-down':'fa fa-caret-up'"></span>
+                        </a>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="c in claims | filter:searchbox | orderBy:sortingOrder:reverse | startFrom:(currentPage-1)*itemsPerPage | limitTo:itemsPerPage">
+                    <td>#{{c.id}}</td>
+                    <td>{{c.fecha}}</td>
+                    <td>{{c.vin}}</td>
+                    <td>{{c.provider}}</td>
+                    <td>${{c.total}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row" >
+    <div class="col-sm-6">
+        
+    </div>
+    <div class="col-sm-6">
+        <ul 
+            uib-pagination total-items="getData().length" 
+            items-per-page="itemsPerPage" 
+            ng-model="currentPage" 
+            max-size="5" 
+            class="pagination pagination-sm float-right" 
+            boundary-link-numbers="true" rotate="false">
+        </ul>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12 text-center">
+        <a href="#/Customer/{{id_client}}" class="btn btn-primary" style="background-color: #1C335C!important;">Go Back</a>
+    </div>
+</div>

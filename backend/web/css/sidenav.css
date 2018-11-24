@@ -1,0 +1,25 @@
+.side-nav .logo-wrapper a {
+    height: 8.75rem;
+    width: 15rem;
+    padding: 0;
+}
+.side-nav .logo-wrapper img {
+    height: auto;
+    padding: 20% 50px;
+}
+@media (max-height: 992px){
+	.side-nav .logo-wrapper, .side-nav .logo-wrapper a {
+	    height: 175px;
+	}
+	.side-nav .logo-wrapper img {
+	    padding-top: 7%;
+	    padding-bottom: 7%;
+	}
+}
+.side-nav .collapsible .collapsible-header i:first-child {
+    line-height: 36px;
+}
+
+select{
+	display: initial!important;
+}

@@ -1,0 +1,235 @@
+<div class="col-sm-12">
+    <div class="row">
+        <div class="col-sm-12" style="color: #FFF; text-align: center; background-color: #1c335c; padding: 10px;">
+            <h5 style="margin-bottom: 0;">Customer</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 form-section">General Information</div>
+        <div class="col-md-6">
+            <dl class="row p-3">
+                <div class="col-sm-12 form-group-separator">Client</div>
+
+                <dt class="col-sm-4">Name</dt>
+                <dd class="col-sm-8">{{client.name}} {{client.apellido}}</dd>
+
+                <dt class="col-sm-4">D.O.B</dt>
+                <dd class="col-sm-8">{{client.date_birth | date: 'MM-dd-yyyy' }}</dd>
+
+                <dt class="col-sm-4">Language</dt>
+                <dd class="col-sm-8">{{ getLanguage(client.idioma)}}</dd>
+
+                <div class="col-sm-12 form-group-separator">Contact</div>
+
+                <dt class="col-sm-4">Email</dt>
+                <dd class="col-sm-8">{{client.email}}</dd>
+
+                <dt class="col-sm-4">Phone</dt>
+                <dd class="col-sm-8">{{client.phone | tel}}</dd>
+
+                <dt class="col-sm-4">Phone #2</dt>
+                <dd class="col-sm-8">{{client.phone2 | tel}}</dd>
+
+                <dt class="col-sm-4">Address</dt>
+                <dd class="col-sm-8">{{client.address}}</dd>
+
+                <dt class="col-sm-4">City</dt>
+                <dd class="col-sm-8">{{client.city}}</dd>
+
+                <dt class="col-sm-4">State</dt>
+                <dd class="col-sm-8">{{ getState(client.state) | uppercase}}</dd>
+
+                <dt class="col-sm-4">ZIP</dt>
+                <dd class="col-sm-8">{{client.zip}}</dd>
+
+
+            </dl>
+        </div>
+        <div class="col-md-6">
+            <dl class="row p-3">
+                <div class="col-sm-12 form-group-separator">Insurance Company</div>
+
+                <dt class="col-sm-4">Name</dt>
+                <dd class="col-sm-8">{{client.compania}}</dd>
+
+                <div class="col-sm-12 form-group-separator">Dates</div>
+
+                <dt class="col-sm-4">Efective</dt>
+                <dd class="col-sm-8">{{client.effective | date: 'MM-dd-yyyy' }}</dd>
+
+                <dt class="col-sm-4">Pay Date</dt>
+                <dd class="col-sm-8">{{client.fechaMed | date: 'MM-dd-yyyy'}}</dd>
+
+                <dt class="col-sm-4">Exp Date</dt>
+                <dd class="col-sm-8">{{client.exp | date: 'MM-dd-yyyy' }}</dd>
+
+                <div class="col-sm-12 form-group-separator">Service</div>
+
+                <dt class="col-sm-4">Current Service</dt>
+                <dd class="col-sm-8">
+                    <label ng-if="client.service == 1">Roadside</label>
+                    <label ng-if="client.service == 2">Glass</label>
+                </dd>
+
+                <dt class="col-sm-4">Period Membership</dt>
+                <dd class="col-sm-8">
+                    <label ng-if="client.plan == 1">Monthly</label>
+                    <label ng-if="client.plan == 2">Six Months</label>
+                    <label ng-if="client.plan == 3">One Year</label>
+                </dd>
+
+                <dt class="col-sm-4">Status</dt>
+                <dd class="col-sm-8">{{client.Dpayment}}</dd>
+            </dl>
+        </div>
+    </div>
+    <form name="frmClient" ng-submit="SaveCoverage()" >
+        <fieldset>
+            <div class="row">
+                <div class="col-sm-12 form-section"   style="cursor: pointer;" > Service</div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <select disabled  ng-model="selectedService" ng-change="selectService(selectedService)" class="form-control  ng-pristine ng-valid ng-empty ng-touched" >   
+                        <option value="1" ng-selected="selectedService === 1">Roadside</option>
+                        <option value="2" ng-selected="selectedService === 2">Glass</option>
+
+                    </select>
+                    <br>
+                    <br>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 form-section" ng-click="switchVehicles()"  style="cursor: pointer;" > Vehicles</div>
+            </div>
+
+            <div class="row" ng-show="displayVehicles">
+
+                <div class="col-md-12">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th class="Font_th">VIN</th>
+                                <th class="Font_th">Model</th>
+                                <th class="Font_th">Year</th>
+                                <th class="Font_th">Make</th>
+                                <th class="Font_th">Glass</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="v in vehicles">
+                                <td>{{v.vin}}</td>
+                                <td>{{v.model}}</td>
+                                <td>{{v.year}}</td>
+                                <td>{{v.make}}</td>
+                                <td>
+                                    {{v.glass}}
+                                    <select ng-change="calcularCoverage(v.glass,$index)" ng-disabled="selectedService == 2" ng-model="v.glass" class="form-control ng-pristine ng-valid ng-empty ng-touched">   
+                                        <option value="{{v.glass}}" ng-selected="v.glass">{{v.glass}}</option>
+                                        <option value="YES" ng-if="v.glass === 'No'">YES</option>
+                                        <option value="YES" ng-if="v.glass === 'NO'">YES</option>  
+                                        <option value="NO" ng-if="v.glass === 'YES'">NO</option>
+                                        <option value="NO" ng-if="v.glass === 'Yes'">NO</option>
+                                    </select>
+
+                                </td>
+
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-sm-12 form-section">Payment Method</div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-3 px-3" style="margin: auto;" ng-class="{ 'mx-auto': (!selectedPlan.value || selectedPlan.value == 1), 'ml-auto': (selectedPlan.value == 2 || selectedPlan.value == 3) }">
+                    <label for="pay">Method</label>
+                    <select class="form-control" id="pay" ng-model="client.pay" required>
+                        <option value="" ng-selected="{{!client.pay}}">Select...</option>
+                        <option value="1" ng-selected="{{client.pay == 1}}">CASH</option>
+                        <option value="2" ng-selected="{{client.pay == 2}}">CARD</option>
+
+                    </select>
+                </div>
+
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6 px-5 mx-auto text-center">
+                    <label for="paid">Please EnterAmount</label>
+                    <input type="text" class="form-control total-amount-input" id="paid" ng-model="client.paid" ng-init="client.paid = 0" ui-number-mask required="required">
+                </div>
+                <div class="form-group col-md-6 px-5 mx-auto text-center">
+                    <label for="calculo">Amount Required</label>
+                    <input type="text" class="form-control total-amount-input" id="calculo" ng-value="total" disabled="disabled">
+                </div>
+            </div>
+            <br>
+
+
+            <div id="recurrent-pay-secction" ng-if="client.pay">
+                <div class="form-row">
+                    <div class="form-group col-md-6 mx-auto text-center">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="recurrentPayment" ng-model="cardInfo.recurrentPayment" ng-change="initPaymentDay()">
+                            <label class="custom-control-label" for="recurrentPayment">Set recurrent payment</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row" ng-if="cardInfo.recurrentPayment">
+                    <div class="form-group col-md-3 mx-auto text-center">
+                        <label for="paymentDay">Payment day</label>
+                        <div class="input-group">
+                            <input type="date" class="form-control" id="paymentDay" ng-model="cardInfo.paymentDay" ng-init="client.effective" required="required">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="card-info-section" ng-if="client.pay == 2 || cardInfo.recurrentPayment || client.subscriptionID>0">
+                <div style="text-align: center;" class="mx-auto" ng-if="client.subscriptionID>0">Credit  Card necessary  for update ARB</div>
+                
+                <div class="panel-heading display-table text-center">
+                    <img class="img-responsive center-block" src="/new-system/common/images/accepted_c22e0.png">
+                </div>
+                <div class="form-row" >
+                    <div class="form-group col-md-6 mx-auto text-center">
+                        <label for="billingName">CARDHOLDER NAME</label>
+                        <input type="text" class="form-control" id="billingName" placeholder="FIRST NAME" ng-model="cardInfo.billingName" required="required">
+                        <input type="text" class="form-control" id="billingLastName" placeholder="LAST NAME" ng-model="cardInfo.billingLastName" required="required">
+                    </div>
+                </div>
+                <div class="form-row" >
+                    <div class="form-group col-md-6 mx-auto text-center">
+                        <label for="cardNumber">CARD NUMBER</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="cardNumber" placeholder="VALID CARD NUMBER" ng-model="cardInfo.cardNumber" required="required">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6 mx-auto text-center">
+                        <label for="mm">EXPIRATION DATE </label>
+                        <input type="text" class="form-control" id="mm" placeholder="MM" ng-model="cardInfo.mm" required="required" style="max-width: 60px; display: inline-block;">
+                        <span> / </span>
+                        <input type="text" class="form-control" id="yy" placeholder="YY" ng-model="cardInfo.yy" required="required" style="max-width: 60px; display: inline-block;">
+                    </div>
+                </div>
+                <div class="form-row" >
+                    <div class="form-group col-md-6 mx-auto text-center">
+                        <label for="cardcode">Security Code</label>
+                        <input type="text" class="form-control" id="cardcode" placeholder="CVV" ng-model="cardInfo.cvv" required="required" style="max-width: 60px; display: inline-block;">
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        <div class="text-center">
+            <button type="submit" class="btn btn-danger my-3">submit</button>
+        </div>
+    </form>
+</div>

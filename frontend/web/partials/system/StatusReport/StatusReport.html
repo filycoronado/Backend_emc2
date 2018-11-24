@@ -1,0 +1,137 @@
+<form role="form" class="form" method="post" name="myform" id="myform" ng-submit="DoReport()">
+    <div class="row">
+        <div class="col-md-3 col-lg-3">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-home"></i></span>
+                <select id="agencies" ng-model="StatusSel" class="form-control">   
+
+                    <option value="" selected>---Please select---</option>       
+
+                    <option  value="1">Active</option>
+                    <option  value="2">Pending Cancellation</option>
+                    <option  value="3">Cancelled</option>
+                    <option  value="4">Expired</option>
+                </select>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+    <div class="row">
+        <div class="col-md-3 col-lg-3">
+            <div class="input-group">
+
+                <button  type="submit"  class="btn btn-success">Submit</button>
+            </div>
+        </div>
+
+        <div class="col-md-3 col-lg-3">
+            <div class="input-group">
+
+                <a  href="index.php?r=api/statusform&status={{StatusSel}}"  target="_blank" class="btn btn-success">PDF</a>
+            </div>
+        </div>
+    </div>
+</form>
+<div class="row form-inline">
+    <div class="col-sm-6">
+        <input type="text" class="form-control" placeholder="Search" ng-model="searchbox">
+    </div>
+    <div class="col-sm-6" style="text-align:right;">
+        <label style="font-weight: normal; display: inline-block;">
+            Show 
+            <select class="form-control input-sm" id="itemsPerPage" ng-model="itemsPerPage" ng-change="resetPage()">
+                <option value="10">10</option>
+                <option value="100">100</option>
+                <option value="1000">1000</option>
+            </select>
+            per page
+        </label>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12 table-resposive">
+        <table class="table table-striped" id="report-table"  style="font-size: 14px; text-align: center;">
+            <thead>
+                <tr>
+                    <th class="Font_th">
+                        #
+                    </th>
+                    <th class="Font_th">
+                        <a class="col-sort" ng-click="sort_by('id_agencia')">
+                            Agency # <span ng-show="sortingOrder == 'id_agencia'" ng-class="!reverse ? 'fa fa-caret-down' : 'fa fa-caret-up'"></span>
+                        </a>
+                    </th>
+
+                    <th class="Font_th">
+                        Membership#
+                    </th>
+                    <th class="Font_th">
+                        <a class="col-sort" >
+                            Customer 
+                        </a>
+                    </th>
+                    <th class="Font_th">
+                        <a class="col-sort" ng-click="sort_by('phone')">
+                            Phone <span ng-show="sortingOrder == 'phone'" ng-class="!reverse ? 'fa fa-caret-down' : 'fa fa-caret-up'"></span>
+                        </a>
+                    </th>
+                    <th class="Font_th">
+                        <a class="col-sort" ng-click="sort_by('total')">
+                            Total <span ng-show="sortingOrder == 'total'" ng-class="!reverse ? 'fa fa-caret-down' : 'fa fa-caret-up'"></span>
+                        </a>
+                    </th>
+                    <th class="Font_th">
+                        <a class="col-sort" >
+                            Status 
+                        </a>
+                    </th>
+
+                    <!--<th class="Font_th" style="width: 36px;"></th>-->
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="c in clients | filter:searchbox | orderBy:sortingOrder:reverse | startFrom:(currentPage - 1) * itemsPerPage | limitTo:itemsPerPage">
+                    <td>{{$index + 1}}</td>
+                    <td>{{c.id_agencia}}</td>
+                    <td>{{c.id}}</td>
+                    <td>{{c.name}} {{c.apellido}}</td>
+
+                    <td>{{c.phone}}</td>
+                    <td>${{c.total}}</td>
+                    <td ng-if="label == 1" class="text-success">Active</td>
+                    <td ng-if="label == 2" class="text-warning">Pending Cancellation</td>
+                    <td ng-if="label == 3" class="text-danger">Cancelled</td>
+                    <td ng-if="label == 4" class="text-danger">Expired</td>
+                    <!--<td></td>-->
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>
+<div class="row" >
+    <div class="col-sm-6">
+
+    </div>
+    <div class="col-sm-6">
+        <ul 
+            uib-pagination total-items="getData().length" 
+            items-per-page="itemsPerPage" 
+            ng-model="currentPage" 
+            max-size="5" 
+            class="pagination pagination-sm float-right" 
+            boundary-link-numbers="true" rotate="false">
+        </ul>
+    </div>
+</div>

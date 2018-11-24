@@ -1,0 +1,12 @@
+.expired{
+    color: red !important;
+    font-weight: bold !important;
+}
+.mactive{
+    color: #0c900b !important;
+    font-weight: bold !important;
+}
+.pendingC{
+    color: #c6d229 !important;
+    font-weight: bold !important;
+}

@@ -1,0 +1,105 @@
+<div class="row form-inline">
+    <div class="col-sm-6">
+        <input type="text" class="form-control" placeholder="Search" ng-model="searchbox">
+    </div>
+    <div class="col-sm-6" style="text-align:right;">
+        <label style="font-weight: normal; display: inline-block;">
+            Show 
+            <select class="form-control input-sm" id="itemsPerPage" ng-model="itemsPerPage" ng-change="resetPage()">
+                <option value="10">10</option>
+                <option value="100">100</option>
+                <option value="1000">1000</option>
+            </select>
+             per page
+        </label>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12 table-resposive">
+        <table class="table table-striped" id="clients-table">
+            <thead>
+                <tr>
+                     <th class="Font_th">
+                         #
+                     </th>
+                    <th class="Font_th">
+                        <a class="col-sort" ng-click="sort_by('id')">
+                          Memberhip # <span ng-show="sortingOrder == 'id'" ng-class="!reverse? 'fa fa-caret-down':'fa fa-caret-up'"></span>
+                        </a>
+                    </th>
+                    <th class="Font_th">
+                        <a class="col-sort" ng-click="sort_by('id_users')">
+                          Agent <span ng-show="sortingOrder == 'id_users'" ng-class="!reverse? 'fa fa-caret-down':'fa fa-caret-up'"></span>
+                        </a>
+                    </th>
+                    <th class="Font_th">
+                        <a class="col-sort" ng-click="sort_by('plan')">
+                          Type <span ng-show="sortingOrder == 'plan'" ng-class="!reverse? 'fa fa-caret-down':'fa fa-caret-up'"></span>
+                        </a>
+                    </th>
+                    <th class="Font_th">
+                        <a class="col-sort" ng-click="sort_by('exp')">
+                          Exp Date <span ng-show="sortingOrder == 'exp'" ng-class="!reverse? 'fa fa-caret-down':'fa fa-caret-up'"></span>
+                        </a>
+                    </th>
+                    <th class="Font_th">
+                        <a class="col-sort" ng-click="sort_by('name')">
+                          Name <span ng-show="sortingOrder == 'name'" ng-class="!reverse? 'fa fa-caret-down':'fa fa-caret-up'"></span>
+                        </a>
+                    </th>
+                    <th class="Font_th">
+                        <a class="col-sort" ng-click="sort_by('email')">
+                          Email <span ng-show="sortingOrder == 'email'" ng-class="!reverse? 'fa fa-caret-down':'fa fa-caret-up'"></span>
+                        </a>
+                    </th>
+                    <th class="Font_th">
+                        <a class="col-sort" ng-click="sort_by('phone')">
+                          Phone <span ng-show="sortingOrder == 'phone'" ng-class="!reverse? 'fa fa-caret-down':'fa fa-caret-up'"></span>
+                        </a>
+                    </th>
+                    <th class="Font_th">
+                        <a class="col-sort" ng-click="sort_by('id_agencia')">
+                          Agency <span ng-show="sortingOrder == 'id_agencia'" ng-class="!reverse? 'fa fa-caret-down':'fa fa-caret-up'"></span>
+                        </a>
+                    </th>
+                    <th class="Font_th" style="width: 36px;"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="c in Clients_Actives | filter:searchbox | orderBy:sortingOrder:reverse | startFrom:(currentPage-1)*itemsPerPage | limitTo:itemsPerPage">
+                    <td>{{$index+1}}</td>
+                    <td>#{{c.id}}</td>
+                    <td>{{c.id_users}}</td>
+                    <td>
+                        <span ng-if="c.plan == 1">Monthly</span>
+                        <span ng-if="c.plan == 2">Six Months</span>
+                        <span ng-if="c.plan == 3">Year</span>
+                    </td>
+                    <td>{{c.exp}}</td>
+                    <td>{{c.name}}{{c.apellido}}</td>
+                    <td>{{c.email}}</td>
+                    <td>{{c.phone | tel}}</td>
+                    <td>{{c.id_agencia}}</td>
+                    <td>
+                        <a href="#/Customer/{{c.id}}"><i class="fa fa-cog" style="font-size:24px"></i></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row" >
+    <div class="col-sm-6">
+        
+    </div>
+    <div class="col-sm-6">
+        <ul 
+            uib-pagination total-items="getData().length" 
+            items-per-page="itemsPerPage" 
+            ng-model="currentPage" 
+            max-size="5" 
+            class="pagination pagination-sm float-right" 
+            boundary-link-numbers="true" rotate="false">
+        </ul>
+    </div>
+</div>

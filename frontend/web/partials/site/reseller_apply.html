@@ -1,0 +1,105 @@
+<!--<div class="row">-->
+    <div class="col-md-12 bg-bar" >
+        <form role="form" class="form-register" method="post" name="myform" id="myform" ng-submit="register()">
+            <div class="row"">
+            
+                <div class="col-md-4" style="padding-top: 8%;">
+                    <div class="row text-center">
+                        <div class="col-md-10 mx-auto form-group" ng-class="{ 'has-success': !error['name'] && submitted, 'has-error': error['name'] && submitted }">
+                            <!--<h5 class="titulo">First Name</h5>-->
+                            <input type="text" class="form-control" name="name" placeholder="First Name" ng-model="userModel.name" required="required">
+                            <p class="help-block help-block-error m-0">{{ error['name']}}</p>
+                        </div>
+                        <div class="col-md-10 mx-auto form-group" ng-class="{ 'has-success': !error['apellido'] && submitted, 'has-error': error['apellido'] && submitted }">
+                            <!--<h5 class="titulo">Last Name</h5>-->
+                            <input type="text" class="form-control" name="apellido" placeholder="Last Name" ng-model="userModel.apellido" required="required">
+                            <p class="help-block help-block-error m-0">{{ error['apellido']}}</p>
+                        </div>
+                        <div class="col-md-10 mx-auto form-group" ng-class="{ 'has-success': !error['email'] && submitted, 'has-error': error['email'] && submitted }">
+                            <!--<h5 class="titulo">Email</h5>-->
+                            <input type="email" class="form-control" name="user" placeholder="Email" ng-model="userModel.email" required="required">
+                            <p class="help-block help-block-error m-0">{{ error['email']}}</p>
+                        </div>
+                        <div class="col-md-10 mx-auto form-group" ng-class="{ 'has-success': !error['user'] && submitted, 'has-error': error['user'] && submitted }">
+                            <!--<h5 class="titulo">Username</h5>-->
+                            <input type="text" class="form-control" name="user" placeholder="User" ng-model="userModel.user" required="required">
+                            <p class="help-block help-block-error m-0">{{ error['user']}}</p>
+                        </div>
+                        <div class="col-md-10 mx-auto form-group" ng-class="{ 'has-success': !error['pass'] && submitted, 'has-error': error['pass'] && submitted }">
+                            <!--<h5 class="titulo">Password</h5>-->
+                            <input type="password" class="form-control" name="pass" placeholder="Password" ng-model="userModel.pass" required="required">
+                            <p class="help-block help-block-error m-0">{{ error['pass']}}</p>
+                        </div>
+                        <div class="col-md-10 mx-auto form-group" ng-class="{ 'has-success': !error['repass'] && submitted, 'has-error': error['repass'] && submitted }">
+                            <!--<h5 class="titulo">Repeat Password</h5>-->
+                            <input type="password" class="form-control" name="repass" placeholder="Repeat Password" ng-model="userModel.repass" required="required">
+                            <p class="help-block help-block-error m-0">{{ error['repass']}}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4" style="padding-top: 8%;">
+                    <div class="row text-center">
+                        <div class="col-md-10 mx-auto form-group" ng-class="{ 'has-success': !error['agname'] && submitted, 'has-error': error['agname'] && submitted }">
+                            <!--<h5 class="titulo">Agency Name</h5>-->
+                            <input type="text" class="form-control" name="agname" placeholder="Agency Name" ng-model="userModel.agname" required="required">
+                            <p class="help-block help-block-error m-0">{{ error['agname']}}</p>
+                        </div>
+                        <div class="col-md-10 mx-auto form-group" ng-class="{ 'has-success': !error['agemail'] && submitted, 'has-error': error['agemail'] && submitted }">
+                            <!--<h5 class="titulo">Agency Email</h5>-->
+                            <input type="email" class="form-control" name="agemail" placeholder="Agency Email" ng-model="userModel.agemail" required="required">
+                            <p class="help-block help-block-error m-0">{{ error['agemail']}}</p>
+                        </div>
+                        <div class="col-md-10 mx-auto form-group" ng-class="{ 'has-success': !error['agadress'] && submitted, 'has-error': error['agadress'] && submitted }">
+                            <!--<h5 class="titulo">Adress</h5>-->
+                            <input type="text" class="form-control" name="agadress" placeholder="Adress" ng-model="userModel.agadress" required="required">
+                            <p class="help-block help-block-error m-0">{{ error['agadress']}}</p>
+                        </div>
+
+                        <div class="col-md-10 mx-auto form-group" ng-class="{ 'has-success': !error['agcity'] && submitted, 'has-error': error['agcity'] && submitted }">
+                            <!--<h5 class="titulo">City</h5>-->
+                            <input type="text" class="form-control" name="agcity" placeholder="City" ng-model="userModel.agcity" required="required">
+                            <p class="help-block help-block-error m-0">{{ error['agcity']}}</p>
+                        </div>
+                        <div class="col-md-10 mx-auto form-group" ng-class="{ 'has-success': !error['agstate'] && submitted, 'has-error': error['agstate'] && submitted }">
+                            <!--<h5 class="titulo">State</h5>-->
+                            <input type="text" class="form-control" name="agstate" placeholder="State" ng-model="userModel.agstate">
+                            <p class="help-block help-block-error m-0">{{ error['agstate']}}</p>
+                        </div>
+                        <div class="col-md-10 mx-auto form-group" ng-class="{ 'has-success': !error['agzip'] && submitted, 'has-error': error['agzip'] && submitted }">
+                            <!--<h5 class="titulo">Postal Code</h5>-->
+                            <input type="text" class="form-control" name="agzip" placeholder="Postal Code" ng-model="userModel.agzip">
+                            <p class="help-block help-block-error m-0">{{ error['agzip']}}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4" style="padding-top: 8%;">
+                    <div class="row text-center">
+                        <div class="col-md-10 mx-auto form-group" ng-class="{ 'has-success': !error['agphone'] && submitted, 'has-error': error['agphone'] && submitted }">
+                            <!--<h5 class="titulo">Phone</h5>-->
+                            <input type="tel" class="form-control" name="agphone" placeholder="Phone" ng-model="userModel.agphone" required="required">
+                            <p class="help-block help-block-error m-0">{{ error['agphone']}}</p>
+                        </div>
+                        <div class="col-md-10 mx-auto form-group" ng-class="{ 'has-success': !error['agfax'] && submitted, 'has-error': error['agfax'] && submitted }">
+                            <!--<h5 class="titulo">Fax</h5>-->
+                            <input type="tel" class="form-control" name="agfax" placeholder="Fax" ng-model="userModel.agfax">
+                            <p class="help-block help-block-error m-0">{{ error['agfax']}}</p>
+                        </div>
+                        <div class="col-md-10 mx-auto form-group" ng-class="{ 'has-success': !error['agwebsite'] && submitted, 'has-error': error['agwebsite'] && submitted }">
+                            <!--<h5 class="titulo">WebSite</h5>-->
+                            <input type="text" class="form-control" name="agwebsite" placeholder="WebSite" ng-model="userModel.agwebsite">
+                            <p class="help-block help-block-error m-0">{{ error['agwebsite']}}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 text-center" style="padding-bottom: 4%">
+                    <a class="btn btn-dark" href="#/reseller">GO BACK</a>
+                    <button type="submit" class="btn btn-danger">APPLY</button>
+                </div>
+            
+            </div>
+        </form>
+    </div>
+<!--</div>-->

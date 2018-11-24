@@ -1,0 +1,300 @@
+<div class="col-sm-12">
+    <div class="row">
+        <div class="col-sm-12" style="color: #FFF; text-align: center; background-color: #1c335c; padding: 10px;">
+            <h5 style="margin-bottom: 0;">Customer</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 form-section">General Information</div>
+        <div class="col-md-6">
+            <dl class="row p-3">
+                <div class="col-sm-12 form-group-separator">Client</div>
+
+                <dt class="col-sm-4">Name</dt>
+                <dd class="col-sm-8">{{client.name}} {{client.apellido}}</dd>
+
+                <dt class="col-sm-4">D.O.B</dt>
+                <dd class="col-sm-8">{{client.date_birth|  date: 'MM-dd-yyyy'}}</dd>
+
+                <dt class="col-sm-4">Language</dt>
+                <dd class="col-sm-8">{{ getLanguage(client.idioma)}}</dd>
+
+                <div class="col-sm-12 form-group-separator">Contact</div>
+
+                <dt class="col-sm-4">Email</dt>
+                <dd class="col-sm-8">{{client.email}}</dd>
+
+                <dt class="col-sm-4">Phone</dt>
+                <dd class="col-sm-8">{{client.phone| tel}}</dd>
+
+                <dt class="col-sm-4">Phone #2</dt>
+                <dd class="col-sm-8">{{client.phone2| tel}}</dd>
+
+                <dt class="col-sm-4">Address</dt>
+                <dd class="col-sm-8">{{client.address}}</dd>
+
+                <dt class="col-sm-4">City</dt>
+                <dd class="col-sm-8">{{client.city}}</dd>
+
+                <dt class="col-sm-4">State</dt>
+                <dd class="col-sm-8">{{ getState(client.state) | uppercase}}</dd>
+
+                <dt class="col-sm-4">ZIP</dt>
+                <dd class="col-sm-8">{{client.zip}}</dd>
+
+                <div class="col-sm-12 text-center"><a href="#/Customer/{{id_client}}/edit" class="btn btn-primary" style="background-color: #1C335C!important;"><i class="far fa-edit"></i> Edit</a></div>
+            </dl>
+        </div>
+        <div class="col-md-6">
+            <dl class="row p-3">
+                <div class="col-sm-12 form-group-separator">Insurance Company</div>
+
+                <dt class="col-sm-4">Name</dt>
+                <dd class="col-sm-8">{{client.compania}}</dd>
+
+                <div class="col-sm-12 form-group-separator">Dates</div>
+
+                <dt class="col-sm-4">Efective</dt>
+                <dd class="col-sm-8">{{client.effective| date: 'MM-dd-yyyy' }}</dd>
+
+                <dt class="col-sm-4">Pay Date</dt>
+                <dd class="col-sm-8">{{client.fechaMed| date: 'MM-dd-yyyy' }}</dd>
+
+                <dt class="col-sm-4">Exp Date</dt>
+                <dd class="col-sm-8">{{client.exp| date: 'MM-dd-yyyy'}}</dd>
+
+                <div class="col-sm-12 form-group-separator">Service</div>
+
+                <dt class="col-sm-4">Current Service</dt>
+                <dd class="col-sm-8">
+                    <label ng-if="client.service == 1">Roadside</label>
+                    <label ng-if="client.service == 2">Glass</label>
+                </dd>
+
+                <dt class="col-sm-4">Period Membership</dt>
+                <dd class="col-sm-8">
+                    <label ng-if="client.plan == 1">Monthly</label>
+                    <label ng-if="client.plan == 2">Six Months</label>
+                    <label ng-if="client.plan == 3">One Year</label>
+                </dd>
+
+                <dt class="col-sm-4">Status</dt>
+                <dd class="col-sm-8" ng-if="client.habilitado === 1">{{CurrentStatus}}</dd>
+                <dd class="col-sm-8" ng-if="client.habilitado === 0">Cencelled Member Request</dd>
+                <dt class="col-sm-4">Payment</dt>
+                <dd class="col-sm-8">{{client.total}}</dd>
+
+                <dt class="col-sm-4">Membership #</dt>
+                <dd class="col-sm-8">{{client.id}}</dd>
+                
+                <dt class="col-sm-4">Credit Pending $</dt>
+                <dd class="col-sm-8">{{client.credit_value}}</dd>
+                
+                <dt class="col-sm-4">Credi Payment  Date</dt>
+                <dd class="col-sm-8">{{client.payment_date_credit}}</dd>
+            </dl>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 form-section">Notes</div>
+    </div>
+    <div class="row">
+
+        <div class="col-md-12">
+            <div class="col-md-12  text-center mx-auto">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addNewNote" style="background-color: #1C335C!important;" ><i class="fa fa-plus-circle"></i> Add Note </button>
+            </div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th class="Font_th">Date</th>      
+                        <th class="Font_th">Note</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="n in notes">
+                        <td style="width: 118px;">{{n.date| date: 'MM-dd-yyyy' }}</td>
+                        <td>{{n.note}}</td>
+
+
+                    </tr>
+                </tbody>
+            </table>
+            <div class="row">
+                <div class="col-md-12 text-center mx-auto">
+                    <a href="#/Customer/{{id_client}}/Notes" class="btn btn-primary" style="background-color: #1C335C!important;">View All Notes...</a>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 form-section">Actions</div>
+    </div>
+
+    <div class="row">
+
+
+        <div class="form-group col-md-3 ">
+            <a href="index.php?r=api/member_card&id={{id_client}}" target="_blank" class="btn btn-primary" style="background-color: #1C335C!important;">Member Card Form</a>
+
+        </div>
+        <div class="form-group col-md-3 ">
+            <a href="index.php?r=api/autopayform&id={{id_client}}" target="_blank" class="btn btn-primary" style="background-color: #1C335C!important;">Auto Pay Form</a>
+
+        </div>
+        <div class="form-group col-md-3 ">
+            <a href="#/Customer/{{id_client}}/Coverages" class="btn btn-primary" style="background-color: #1C335C!important;">Add/Remove Glass</a>
+        </div>
+        <div class="form-group col-md-3 ">
+            <a href="#/Customer/{{id_client}}/ModifyMembership" class="btn btn-primary" style="background-color: #1C335C!important;">Endorsement</a>
+        </div>
+
+        <div class="form-group col-md-3 ">
+            <a href="#/Customer/{{id_client}}/AutoPay" class="btn btn-primary" style="background-color: #1C335C!important;">Auto Pay</a>
+        </div>
+
+
+    </div>
+    <div class="row">
+        <div class="col-sm-12 form-section" ng-click="switch ()"  style="cursor: pointer;">Payment History</div>
+    </div>
+    <div class="row" ng-show="display">
+        <div class="col-md-12">
+            <div class="form-group col-md-12 text-center mx-auto " ng-show="client.habilitado === 1">
+                <a  href="#/Customer/{{id_client}}/makePayment" class="btn btn-primary" style="background-color: #1C335C!important;">Make A Payment</a>
+
+            </div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th class="Font_th">Date</th>
+                        <th class="Font_th">Agent</th>
+                        <th class="Font_th">Type</th>
+                        <th class="Font_th">Method Payment</th>
+                        <th class="Font_th">total</th>
+                        <th class="Font_th" style="width: 36px;"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="p in payments">
+                        <td>{{p.date| date: 'MM-dd-yyyy' }}</td>
+                        <td>{{p.agente}}</td>
+                        <td>{{p.type}}</td>
+                        <td>{{p.payment}}</td>
+                        <td>${{p.total}}</td>
+                        <td><a href="index.php?r=api/invoce_pdf&id={{p.id}}" target="_blank" title="Invoce"><i class="fas fa-file-invoice-dollar fa-lg"></i></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-12 text-center">
+            <a href="#/Customer/{{id_client}}/payments" class="btn btn-primary" style="background-color: #1C335C!important;">View All Payments...</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 form-section" ng-click="switchVehicles()"  style="cursor: pointer;" > Vehicles</div>
+    </div>
+
+    <div class="row" ng-show="displayVehicles">
+
+        <div class="col-md-12">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th class="Font_th">VIN</th>
+                        <th class="Font_th">Model</th>
+                        <th class="Font_th">Year</th>
+                        <th class="Font_th">Make</th>
+                        <th class="Font_th">Glass</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="v in vehicles">
+                        <td>{{v.vin}}</td>
+                        <td>{{v.model}}</td>
+                        <td>{{v.year}}</td>
+                        <td>{{v.make}}</td>
+                        <td>{{v.glass}}</td>
+
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-sm-12 form-section" ng-click="switchClaims()"  style="cursor: pointer;" >Claims History</div>
+    </div>
+    <div class="row" ng-show="displayClaims">
+        <div class="col-md-12">
+            <div class="form-group col-md-12 text-center mx-auto " ng-show="CurrentStatus === 'Active' || CurrentStatus === 'Pending Cancellation' && client.habilitado === 1">
+                <a href="#/Customer/{{id_client}}/addClaim" class="btn btn-primary" style="background-color: #1C335C!important;">Add Claim</a>
+            </div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th class="Font_th">Claim #</th>
+                        <th class="Font_th">Date</th>
+                        <th class="Font_th">Vin</th>
+                        <th class="Font_th">Provider</th>
+                        <th class="Font_th">total</th>
+                        <th class="Font_th" style="width: 36px;"></th>
+
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="c in claims">
+                        <td>#{{c.id}}</td>
+                        <td>{{c.fecha| date: 'MM-dd-yyyy' }}</td>
+                        <td>{{c.vin}}</td>
+                        <td>{{c.provider}}</td>
+                        <td>${{c.total}}</td>
+                        <td> <a href="index.php?r=api/claim_form&id={{c.id}}" target="_blank"><i class="fa fa-download" style="font-size:24px"   ></i></a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-12 text-center">
+            <a href="#/Customer/{{id_client}}/claims" class="btn btn-primary" style="background-color: #1C335C!important;">View All Claims...</a>
+        </div>
+    </div>
+
+
+</div>
+<div class="modal fade" id="addNewNote" tabindex="-1" role="dialog" aria-labelledby="addNewCarModallLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addNewCarModalLabel">Add Note</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form name="addNewCarForm" ng-submit="addNote()">
+                <div class="modal-body">
+                    <fieldset>
+                        <div class="form-row">
+                            <!--<div class="col-sm-12 form-group-separator">Vehicle</div>-->
+                            <div class="col-md-12">
+                                <textarea class="col-md-12" style="height:150px;" ng-model="note">
+                                    
+                                </textarea>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

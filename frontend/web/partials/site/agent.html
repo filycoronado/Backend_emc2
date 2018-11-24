@@ -1,0 +1,61 @@
+
+<div class="row">
+	<div class="col-md-12">
+
+		<div class="image-grid">
+			<!-- Grid row -->
+			<div class="row">
+
+			  <!-- Grid column -->
+			  <div class="col-sm-12 mb-3 grid-element main">
+			  	<div class="services-cont">
+			  		<ul class="list-inline">
+					  <li class="list-inline-item"><img src="images/service-01.png" class="img-fluid z-depth-1"></li>
+					  <li class="list-inline-item"><img src="images/service-03.png" class="img-fluid z-depth-1"></li>
+					  <li class="list-inline-item"><img src="images/service-04.png" class="img-fluid z-depth-1"></li>
+					  <li class="list-inline-item"><img src="images/service-02.png" class="img-fluid z-depth-1"></li>
+					</ul>
+			  	</div>
+			    <img src="images/Recurso_8.png" class="img-fluid z-depth-1" alt="Responsive image">
+
+			  </div>
+			  <!-- Grid column -->
+			</div>
+			<!-- Grid row -->
+		</div>
+
+		<div style="margin-top: 100px; margin-bottom: 100px;">
+			<form role="form" class="form-login" method="post" name="myform" id="myform" ng-submit="loginAdmin()">
+				<input type="hidden" value="1" name="inicia">
+				<div class="row text-center">
+					<div class="col-sm-4 form-group" ng-class="{ 'has-success': !error['agency'] && submitted, 'has-error': error['agency'] && submitted }">
+						<h5 class="titulo">Enter Agency Code</h5>
+						<input type="text" class="form-control" name="agency" id="agency" placeholder="Agency Code #" ng-model="userModel.agency" required="required" pattern="^ADC\d{3,5}$" oninvalid="setCustomValidity('ADC105 Example')" oninput="setCustomValidity('')">
+						<p class="help-block help-block-error">{{ error['agency'] }}</p>
+					</div>
+					<div class="col-sm-4 form-group" ng-class="{ 'has-success': !error['username'] && submitted, 'has-error': error['username'] && submitted }">
+						<h5 class="titulo">Enter Username</h5>
+						<input type="text" class="form-control" name="user" placeholder="User" ng-model="userModel.username" required="required">
+						<p class="help-block help-block-error">{{ error['username'] }}</p>
+					</div>
+					<div class="col-sm-4 form-group" ng-class="{ 'has-success': !error['password'] && submitted, 'has-error': error['password'] && submitted }">
+						<h5 class="titulo">Enter Password</h5>
+						<input type="password" class="form-control" name="pass" placeholder="Password" ng-model="userModel.password" required="required">
+						<p class="help-block help-block-error">{{ error['password'] }}</p>
+					</div>
+					<div class="col-sm-12">
+						<div class="form-check">
+						  <input class="form-check-input" type="checkbox" value="1" name="recordar" id="recordar" ng-model="userModel.rememberMe">
+						  <label class="form-check-label" for="recordar">
+						    Remember me
+						  </label>
+						</div>
+					</div>
+					<div class="col-sm-12"><button type="submit" class="btn btn-danger">Login</button></div>
+				</div>
+			</form>
+		</div>
+		
+	</div>
+
+</div>

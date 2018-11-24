@@ -1,0 +1,180 @@
+<div class="col-sm-12">
+    <div class="row">
+        <div class="col-sm-12" style="color: #FFF; text-align: center; background-color: #1c335c; padding: 10px;">
+            <h5 style="margin-bottom: 0;">Create Claim</h5>
+        </div>
+    </div>
+
+    <form name="frmClient" ng-submit="saveClaim()">
+        <fieldset>
+            <div class="row">
+                <div class="col-sm-12 form-section">General Infromation </div>
+            </div>
+            <div class="form-row">
+                <div class="col-sm-12 form-group-separator">Provider Information</div>
+                <div class="form-group col-md-4 px-5 mx-auto">
+                    <label for="citySelect">City</label>
+                    <select   name="citySelect" ng-model="AllClaim.City"  ng-change="GetProviders()" class="form-control" required="">
+                        <option value="" selected>---Please select---</option>
+                        <option ng-repeat="c in cities" value="{{c.id}}" >{{ c.nombre}}/{{c.estado}}</option>
+                    </select>
+
+                </div>
+                <div class="form-group col-md-6 px-5 mx-auto">
+                    <label for="providers">Provider</label>
+                    <select class="form-control" name="AllClaim.providers"  ng-model="AllClaim.ProviderSelected" required="">
+                        <option value="" selected>---Please select---</option>  
+                        <option ng-repeat="p in providers" value="{{p.id}}" >{{p.nombre}}</option>
+                    </select>
+                </div>
+
+                <div class="col-sm-12 form-group-separator">Customer Information</div>
+
+                <div class="form-group col-md-3 px-5 mx-auto">
+                    <label for="name">Customer Name</label>
+                    <br>
+                    <label>{{client.name}} {{client.apellido}}</label>
+
+                </div>
+                <div class="form-group col-md-3 px-5 mx-auto">
+                    <label for="name">Membership #</label>
+                    <br>
+                    <label>#{{client.id}}</label>
+
+                </div>
+
+                <div class="form-group col-md-3 px-5 mx-auto">
+                    <label for="name">Phone #</label>
+                    <br>
+                    <label>#{{client.phone}}</label>
+
+                </div>
+
+                <div class="form-group col-md-3 px-5 mx-auto">
+                    <label for="name">Service</label>
+                    <br>
+                    <label ng-if="client.service == 1">RoadSide / Possible Glass</label>
+                    <label ng-if="client.service == 2">Solo Glass</label>
+
+                </div>
+
+                <div class="col-sm-12 form-group-separator">Vehicle Information</div>
+                <div class="form-group col-md-4 px-5 mx-auto">
+                    <label for="vehicle">Vehicle</label>
+                    <select class="form-control" name="vehicle"  ng-model="AllClaim.VehicleSelected" required="">
+                        <option value="" selected>---Please select---</option>
+                        <option ng-repeat="v in vehicles" value="{{v.id}}" >{{ v.make}}  {{v.model}} {{v.year}}</option>
+                    </select>
+
+
+                </div>
+                <div class="form-group col-md-4 px-5 mx-auto">
+                    <label for="vehicleConditions">Conditions</label>
+                    <select class="form-control" name="vehicleConditions"  ng-model="AllClaim.VehicleConditions" required="">
+                        <option value="" selected>---Please select---</option>
+                        <option value="1">MILD</option>
+                        <option value="2">MODERATE</option>
+                        <option value="3">SEVERE</option>
+                    </select>
+
+
+                </div>
+
+                <div class="form-group col-md-4 px-5 mx-auto">
+                    <label for="vehicleType">Type Vehilce</label>
+                    <select class="form-control" name="vehicleType"  ng-model="AllClaim.vehicleType" required="">
+                        <option value="" selected>---Please select---</option>
+                        <option value="1">Light Duty</option>
+                        <option value="2">Medium Duty</option>
+                        <option value="3">Heavy Duty</option>
+                    </select>
+
+
+                </div>
+
+                <div class="form-group col-md-3 px-5 mx-auto">
+                    <label for="name">Color</label>
+
+                    <input class="form-control"  type="text" ng-model="AllClaim.VehicleColor" required="">
+
+                </div>
+
+                <div class="form-group col-md-3 px-5 mx-auto">
+                    <label for="name">Plates</label>
+
+                    <input class="form-control"  type="text" ng-model="AllClaim.vehilePlates" >
+
+                </div>
+
+                <div class="col-sm-12 form-group-separator">Claim Information</div>
+
+                <div class="form-group col-md-3 px-5 mx-auto">
+                    <label for="vehicleType">Type Service</label>
+                    <select class="form-control" name="vehicleType"  ng-model="AllClaim.ClaimType" required="">
+                        <option value="" selected>---Please select---</option>
+                        <option value="1">TOWING</option>
+                        <option value="2">FLAT TIRE POSIBLE TOW</option>
+                        <option value="3">FUEL</option>
+                        <option value="4">LOCKOUT</option>
+                        <option value="5">GLASS</option>
+                        <option value="6">BATTERY JUMPSTART</option>
+                    </select>
+
+
+                </div>
+
+                <div class="form-group col-md-3 px-5 mx-auto">
+                    <label for="name">Miles To Vehicle</label>
+
+                    <input class="form-control"  type="number" ng-model="AllClaim.mtv">
+
+                </div>
+
+
+                <div class="form-group col-md-3 px-5 mx-auto">
+                    <label for="name">Loaded Miles</label>
+
+                    <input class="form-control"  type="number" ng-model="AllClaim.loadMiles" ng-init="0">
+
+                </div>
+
+                <div class="form-group col-md-3 px-5 mx-auto">
+                    <label for="name">Total</label>
+
+                    <input class="form-control"  type="number" ng-model="AllClaim.total" ng-init="0">
+
+                </div>
+
+                <div class="col-sm-12 form-group-separator">Location Information</div>
+                <div class="form-group col-md-6 px-5 mx-auto">
+                    <label for="name">Origin location</label>
+
+                    <input class="form-control"  type="text" ng-model="AllClaim.originL" required="">
+
+                </div>
+                <div class="form-group col-md-6 px-5 mx-auto">
+                    <label for="name">Destination location</label>
+
+                    <input class="form-control"  type="text" ng-model="AllClaim.DestinationL" required="">
+
+                </div>
+                <div class="col-sm-12 form-group-separator">Observations</div>
+                <div class="form-group col-md-12 px-5 mx-auto" style="text-align: center;">
+                    <textarea class="col-md-12"  rows="4" cols="50" id="textarea"  name="notas" required="" ng-model="AllClaim.observations" >                
+                    </textarea>
+                </div>
+            </div>
+
+
+
+
+        </fieldset>
+        <div class="form-group col-md-12 px-5 mx-auto" style="text-align: center;">
+
+            <button type="submit" class="btn btn-lg btn-danger">submit</button>
+        </div>
+    </form>
+
+
+
+</div>

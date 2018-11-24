@@ -1,0 +1,25 @@
+.label_supp{
+    color: #1c335c;
+    font-weight: bold;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: #fff;
+    background-color: #d93030 !important;
+    font-size: 1.3rem;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link :hover {
+    color: #fff !important;
+
+}
+.light-blue-skin .btn-primary{
+    background-color: #1C335C!important;
+    border-radius: 5px; 
+    color:white;
+}
+
+.btn-danger{
+    border-radius: 5px; 
+    color:white; 
+}
